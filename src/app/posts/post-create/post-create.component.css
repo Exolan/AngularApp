@@ -1,10 +1,19 @@
-mat-card{
-  width: 80%;
-  margin: auto;
-}
-
 mat-form-field,
 textarea{
   width: 100%;
+}
 
+mat-card{
+  margin-top: 1rem;
+  padding: 1rem 10rem;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+button{
+  width: 60%;
+  margin: auto;
 }
