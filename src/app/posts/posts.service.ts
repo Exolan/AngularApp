@@ -20,4 +20,12 @@ export class PostsService {
         this.posts.push(post)
         this.postsUpdate.next([...this.posts])
     }
+
+    deletePost(id: number){
+        this.posts = this.posts.filter(element => element !== this.posts[id])
+        this.postsUpdate.next(this.posts);
+    }
+
+    editPost(id: number, post: object){
+    }
 }
