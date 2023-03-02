@@ -31,6 +31,11 @@ export class PostsService {
             this.http.get('http://localhost:5000/todo/getAll').subscribe((data: any)=>{this.postsUpdate.next(data)})})
     }
 
-    editPost(id: number, post: object){
+    editPost(id: string, title: string, content: string){
+        const body = {title: title, content: content}
+        console.log(id, title, content);
+        
+        this.http.put(`http://localhost:5000/todo/edit/${id}`, JSON.stringify(body)).subscribe(()=>{
+            this.http.get('http://localhost:5000/todo/getAll').subscribe((data: any)=>{this.postsUpdate.next(data)})})
     }
 }

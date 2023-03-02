@@ -1,0 +1,20 @@
+<div class="backdrop" (click)="onBackgroundClick($event)">
+    <div class="modal">
+        <form class="modal_content" (submit)="onSave(postForm)" #postForm="ngForm">
+            <mat-form-field>
+                <input matInput type="text" name="title" ngModel required minlength="3" placeholder="Post Title"  #title="ngModel" (keyup)="onValueTitle($event)">
+                <mat-error *ngIf="title.invalid">Please enter a post title</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <textarea matInput rows="6" name="content" ngModel required placeholder="Post Content" #content="ngModel" (keyup)="onValueContent($event)"></textarea>
+                <mat-error *ngIf="content.invalid">Please enter a post content</mat-error>
+            </mat-form-field>
+            <div class="edit_buttons">
+                <button mat-button color="primary" type="submit">SAVE</button>
+                <button mat-button color="warn" (click)="close.emit()">CANCEL</button>
+            </div>
+        </form>
+    </div>
+</div>
+

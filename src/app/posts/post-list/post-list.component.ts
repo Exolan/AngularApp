@@ -10,7 +10,10 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy{
-  boolean = false
+  id = ''
+  title = ''
+  content = ''
+  modal = false
   posts:Post[] = []
   private postsSub!: Subscription;
 
@@ -33,15 +36,18 @@ export class PostListComponent implements OnInit, OnDestroy{
     this.postsService.deletePost(id)
   }
 
-  onEdit(){
-    this.boolean = true
+  onEdit(id: string, title: string, content: string){
+    this.id = id
+    this.title = title
+    this.content = content
+    this.modal = true
   }
 
   onSave(){
-    this.boolean = false
+    this.modal = false
   }
 
   onCancel(){
-    this.boolean = false
+    this.modal = false
   }
 }
