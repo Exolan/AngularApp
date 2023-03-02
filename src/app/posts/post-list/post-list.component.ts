@@ -10,15 +10,14 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy{
+  boolean = false
   posts:Post[] = []
   private postsSub!: Subscription;
 
   constructor(public postsService: PostsService, private http: HttpClient){}
 
   async ngOnInit(){
-    const array = this.http.get('https://localhost:5000/todo/getAll').subscribe()
-    // const array = await fetch("https://localhost:5000/todo/getAll")
-    console.log(array);
+    this.http.get('http://localhost:5000/todo/getAll').subscribe((data: any)=>{this.posts = data})
 
     this.posts = this.postsService.getPosts();
     this.postsSub = this.postsService.getPostsUpdateListener().subscribe((posts: Post[])=>{
@@ -30,7 +29,19 @@ export class PostListComponent implements OnInit, OnDestroy{
     this.postsSub.unsubscribe();
   }
 
-  onDelete(id: number){
+  onDelete(id: string){
     this.postsService.deletePost(id)
+  }
+
+  onEdit(){
+    this.boolean = true
+  }
+
+  onSave(){
+    this.boolean = false
+  }
+
+  onCancel(){
+    this.boolean = false
   }
 }

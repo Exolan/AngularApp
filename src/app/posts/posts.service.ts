@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { Subject } from "rxjs";
+import { HttpClient } from '@angular/common/http'
+
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
     private posts: Post[] = [];
     private postsUpdate = new Subject<Post[]>();
+
+  constructor(private http: HttpClient){}
+
 
     getPosts(){
         return [...this.posts];
@@ -16,14 +21,14 @@ export class PostsService {
     }
 
     addPost(title: string, content: string){
-        const post: Post = {title: title, content: content}
-        this.posts.push(post)
-        this.postsUpdate.next([...this.posts])
+        const body = {title: title, content: content}
+        this.http.post('http://localhost:5000/todo/new', JSON.stringify(body)).subscribe()
+        this.http.get('http://localhost:5000/todo/getAll').subscribe((data: any)=>{this.postsUpdate.next(data)})
     }
 
-    deletePost(id: number){
-        this.posts = this.posts.filter(element => element !== this.posts[id])
-        this.postsUpdate.next(this.posts);
+    deletePost(id: string){
+        this.http.delete(`http://localhost:5000/todo/delete/${id}`).subscribe(()=>{
+            this.http.get('http://localhost:5000/todo/getAll').subscribe((data: any)=>{this.postsUpdate.next(data)})})
     }
 
     editPost(id: number, post: object){
